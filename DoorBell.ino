@@ -1,114 +1,92 @@
-/*******************************************************************
-  Smart Doorbell using an esp32
-
-  Sends a message through telegram and 
-  plays a sound through a speaker connected via i2s
- *******************************************************************/
-
-#include <WiFi.h>
-#include <WiFiClientSecure.h>
-#include <UniversalTelegramBot.h>
-#include <ArduinoJson.h>
-#include "AudioTools.h"
-#include "Audio.h"
+<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
+<a name="readme-top"></a>
+<!--
+*** Thanks for checking out the Best-README-Template. If you have a suggestion
+*** that would make this better, please fork the repo and create a pull request
+*** or simply open an issue with the tag "enhancement".
+*** Don't forget to give the project a star!
+*** Thanks again! Now go create something AMAZING! :D
+-->
 
 
-#define TELEGRAM_BUTTON_PIN 0
 
-#define AUDIO_BCK_PIN 15
-#define AUDIO_WS_PIN 18
-#define AUDIO_DATA_PIN 12
+<!-- PROJECT LOGO -->
 
+<h3 align="center">Smart Doorbell</h3>
 
-// Wifi network station credentials
-#define WIFI_SSID "*******"
-#define WIFI_PASSWORD "*******"
-// Telegram BOT Token (Get from Botfather)
-#define BOT_TOKEN "**********:******************************"
-
-//Audio settings
-uint8_t channels = 1;
-uint16_t sample_rate = 32000;
-
-// Use @myidbot (IDBot) to find out the chat ID of an individual or a group
-// Also note that you need to click "start" on a bot before it can
-// message you
-#define CHAT_ID "******"
-
-WiFiClientSecure secured_client;
-UniversalTelegramBot bot(BOT_TOKEN, secured_client);
-
-volatile bool telegramButtonPressedFlag = false;
-
-I2SStream i2s;  // Output to I2S
-MemoryStream music(audio_raw, audio_raw_len);
-StreamCopyT<int16_t> copier(i2s, music); // copies sound into i2s
+  <p align="center">
+    A smart Doorbell made with an esp32
+    <br />
+    <a href="https://github.com/SkillFLame/Smart-Doorbell"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="#about-the-project">View Demo</a>
+    ·
+    <a href="https://github.com/SkillFlame/Smart-Doorbell/issues/new">Report Bug</a>
+    ·
+    <a href="https://github.com/SkillFlame/Smart-Doorbell/issues/new">Request Feature</a>
+  </p>
+</div>
 
 
-void setup() {
-  Serial.begin(115200);
 
-  pinMode(TELEGRAM_BUTTON_PIN, INPUT);
-  attachInterrupt(TELEGRAM_BUTTON_PIN, telegramButtonPressed, RISING);
+<!-- ABOUT THE PROJECT -->
+## About The Project
 
-  // attempt to connect to Wifi network:
-  Serial.print("Connecting to Wifi SSID ");
-  Serial.print(WIFI_SSID);
-  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-  secured_client.setCACert(TELEGRAM_CERTIFICATE_ROOT); // Add root certificate for api.telegram.org
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    Serial.print(".");
-    delay(500);
-  }
-  Serial.print("\nWiFi connected. IP address: ");
-  Serial.println(WiFi.localIP());
+[![Product Name Screen Shot][product-screenshot]]
 
+A simple smart doorbell made with an esp32 that sends a notification through Telegram and plays a custom ringtone
 
-  AudioLogger::instance().begin(Serial, AudioLogger::Info);
-  auto config = i2s.defaultConfig(TX_MODE);
-  config.pin_bck = AUDIO_BCK_PIN;
-  config.pin_ws = AUDIO_WS_PIN;
-  config.pin_data = AUDIO_DATA_PIN;
-  config.sample_rate = sample_rate;
-  config.channels = channels;
-  config.bits_per_sample = 16;
-  i2s.begin(config);
-}
+### Built With
 
-void telegramButtonPressed() {
-  Serial.println("telegramButtonPressed");
-  int button = digitalRead(TELEGRAM_BUTTON_PIN);
-  if(button == HIGH)
-  {
-    telegramButtonPressedFlag = true;
-  }
-  return;
-}
+* [Arduino Audio Tools](https://github.com/pschatzmann/arduino-audio-tools)
+* [push-notifications-arduino-esp8266](https://github.com/witnessmenow/push-notifications-arduino-esp8266)
 
-void sendTelegramMessage() {
-  String message = "DingDong";
-  message.concat("\n");
-  if(bot.sendMessage(CHAT_ID, message, "Markdown")){
-    Serial.println("TELEGRAM Successfully sent");
-  }
-  telegramButtonPressedFlag = false;
-}
+## Usage 
 
-void playSound() {
-  MemoryStream music(audio_raw, audio_raw_len);
-  StreamCopyT<int16_t> copier(i2s, music);
-  
-  for(;;) {
-    if (!copier.copy2()){
-      break;
-    }
-  }
-}
+### Material
 
-void loop() {
-  if ( telegramButtonPressedFlag ) {
-    sendTelegramMessage();
-    playSound();
-  }
-}
+* ESP32
+* MAX98357
+* 4ohm speaker
+
+### HOW TO
+
+1. Wire up a pushbutton on a GPIO22
+
+1. Wire up external DAC
+
+1. Change telegram values
+
+1. Load program to esp32
+
+  1. Please note that you must compile this sketch with the Partition Scheme: Huge App!
+
+### Max98357 external DAC
+
+![DAC](images/dac.png)
+
+DAC  |	ESP32
+-----|----------------
+VDD  |	5V (or 3.3V)
+GND  |	GND
+LRC  |	WS (GPIO15)
+BCLK |	BCK (GPIO18)
+DIN  |	DATA (GPIO12)
+
+### Change ringtone
+
+Audacity might help you out here: export the file as RAW signed 16 bit PCM.
+
+Then convert the file with xxd into a C file that contains the data in an array. In the Sketch I am using the MemoryStream class which turns the array into a Stream.
+
+xxd -i ringtone.raw test.c
+
+Please note that you must compile this sketch with the Partition Scheme: Huge App!
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
+[issues-shield]: https://img.shields.io/github/issues/SkillFLame/Smart-Doorbell.svg?style=for-the-badge
+[issues-url]: https://github.com/SkillFlame/Smart-Doorbell/issues/new
+[product-screenshot]: images/screenshot.png

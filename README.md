@@ -50,7 +50,7 @@ A simple smart doorbell made with an esp32 that sends a notification through Tel
 
 ### HOW TO
 
-1. Wire up a pushbutton on a GPIO22
+1. Wire the doorbell to GPIO20
 
 1. Wire up external DAC
 

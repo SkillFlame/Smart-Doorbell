@@ -18,11 +18,12 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-
+<h3 align="center">
+  [![Contributors][contributors-shield]][contributors-url]
+  [![Forks][forks-shield]][forks-url]
+  [![Stargazers][stars-shield]][stars-url]
+  [![Issues][issues-shield]][issues-url]
+</div>
 
 
 <!-- PROJECT LOGO -->
@@ -35,28 +36,13 @@
     <a href="https://github.com/SkillFLame/Smart-Doorbell"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <<a href="#about-the-project">View Demo</a>
+    <a href="#about-the-project">View Demo</a>
     ·
     <a href="https://github.com/SkillFlame/Smart-Doorbell/issues/new">Report Bug</a>
     ·
     <a href="https://github.com/SkillFlame/Smart-Doorbell/issues/new">Request Feature</a>
   </p>
 </div>
-
-
-
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-  </ol>
-</details>
 
 
 
@@ -67,16 +53,12 @@
 
 A simple smart doorbell made with an esp32 that sends a notification through Telegram and plays a custom ringtone
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 ### Built With
 
-* [![Arduino Audio Tools]][https://github.com/pschatzmann/arduino-audio-tools]
-* [![push-notifications-arduino-esp8266][React.js]][https://github.com/witnessmenow/push-notifications-arduino-esp8266]
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+* [Arduino Audio Tools].[https://github.com/pschatzmann/arduino-audio-tools]
+* [push-notifications-arduino-esp8266].[https://github.com/witnessmenow/push-notifications-arduino-esp8266]
 
 
 

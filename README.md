@@ -10,21 +10,6 @@
 
 
 
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-
-
 <!-- PROJECT LOGO -->
 
 <h3 align="center">Smart Doorbell</h3>
@@ -52,23 +37,56 @@
 
 A simple smart doorbell made with an esp32 that sends a notification through Telegram and plays a custom ringtone
 
-
-
 ### Built With
 
-* [Arduino Audio Tools].[https://github.com/pschatzmann/arduino-audio-tools]
-* [push-notifications-arduino-esp8266].[https://github.com/witnessmenow/push-notifications-arduino-esp8266]
+* [Arduino Audio Tools](https://github.com/pschatzmann/arduino-audio-tools)
+* [push-notifications-arduino-esp8266](https://github.com/witnessmenow/push-notifications-arduino-esp8266)
 
+## Usage 
 
+### Material
+
+* ESP32
+* MAX98357
+* 4ohm speaker
+
+### HOW TO
+
+1. Wire up a pushbutton on a GPIO22
+
+1. Wire up external DAC
+
+1. Change telegram values
+
+1. Load program to esp32
+
+  1. Please note that you must compile this sketch with the Partition Scheme: Huge App!
+
+### Max98357 external DAC
+
+![DAC](images/dac.png)
+
+DAC  |	ESP32
+-----|----------------
+VDD  |	5V (or 3.3V)
+GND  |	GND
+LRC  |	WS (GPIO15)
+BCLK |	BCK (GPIO18)
+DIN  |	DATA (GPIO12)
+
+### Change ringtone
+
+Audacity might help you out here: export the file as RAW signed 16 bit PCM.
+
+Then convert the file with xxd into a C file that contains the data in an array. In the Sketch I am using the MemoryStream class which turns the array into a Stream.
+
+xxd -i ringtone.raw test.c
+
+Please note that you must compile this sketch with the Partition Scheme: Huge App!
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/SkillFLame/Smart-Doorbell.svg?style=for-the-badge
-[contributors-url]: https://github.com/SkillFLame/Smart-Doorbell/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/SkillFLame/Smart-Doorbell.svg?style=for-the-badge
-[forks-url]: https://github.com/SkillFLame/Smart-Doorbell/network/members
-[stars-shield]: https://img.shields.io/github/stars/SkillFLame/Smart-Doorbell.svg?style=for-the-badge
-[stars-url]: https://github.com/SkillFLame/Smart-Doorbell/stargazers
+
 [issues-shield]: https://img.shields.io/github/issues/SkillFLame/Smart-Doorbell.svg?style=for-the-badge
 [issues-url]: https://github.com/SkillFlame/Smart-Doorbell/issues/new
 [product-screenshot]: images/screenshot.png

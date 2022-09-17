@@ -18,7 +18,6 @@
     A smart Doorbell made with an esp32
     <br />
     <br />
-    <br />
     <a href="#about-the-project">View Demo</a>
     ·
     <a href="https://github.com/SkillFlame/Smart-Doorbell/issues/new">Report Bug</a>

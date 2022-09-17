@@ -60,7 +60,7 @@ A simple smart doorbell made with an esp32 that sends a notification through Tel
 
 1. Load program to esp32
 
-  1. Please note that you must compile this sketch with the Partition Scheme: Huge App!
+    1. Please note that you must compile this sketch with the Partition Scheme: Huge App!
 
 ### Max98357 external DAC
 

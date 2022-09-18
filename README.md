@@ -77,9 +77,9 @@ DIN  |	DATA (GPIO12)
 Audacity might help you out here: export the file as RAW signed 16 bit PCM.
 
 Then convert the file with xxd into a C file that contains the data in an array. In the Sketch I am using the MemoryStream class which turns the array into a Stream.
-
+``` code
 xxd -i ringtone.raw test.c
-
+``
 Please note that you must compile this sketch with the Partition Scheme: Huge App!
 
 <!-- MARKDOWN LINKS & IMAGES -->
